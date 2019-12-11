@@ -1,0 +1,89 @@
+<?php
+
+require_once 'conn.php';
+
+if (isset($_POST['id']) && isset($_POST['fileurl'])) {
+
+  // look up the contact in infusionsoft
+
+  $cid = $_POST['id'];
+
+  // upload the file to the filebox if they are found
+
+  // get the file content from the url
+
+  if ($cid) {
+
+    $url = explode("/", $_POST['fileurl']);
+
+    $count = count($url) - 1;
+
+    $fileName = $url[$count];
+
+    $file = base64_encode(file_get_contents($_POST['fileurl']));
+
+    $upload = $app->uploadFile($fileName, $file, $cid);
+
+  }
+
+}
+
+if (isset($_POST['id'])) {
+
+  $cid = $_POST['id'];
+
+  $email3 = $_POST['insuredemail'];
+
+  $newowner = $_POST['newowner'];
+
+  if ($newowner == 'Jo Sundermeyer') {
+    $ownerId = 147;
+    $appSpecialist = 'Jo Sundermeyer';
+  } elseif ($newowner == 'Kim Joseph') {
+    $ownerId = 4359;
+    $appSpecialist = 'Kim Joseph';
+  } elseif ($newowner == 'Hannah Kessler') {
+    $ownerId = 149;
+    $appSpecialist = 'Hannah Kesler';
+  } elseif ($newowner == 'Round Robin') {
+    $random = rand(1,3);
+    if ($random == 1) {
+      $ownerId = 147;
+      $appSpecialist = 'Jo Sundermeyer';
+    }
+
+    if ($random == 2) {
+      $ownerId = 4359;
+      $appSpecialist = 'Kim Joseph';
+    }
+
+    if ($random == 3) {
+      $ownerId = 149;
+      $appSpecialist = 'Hannah Kesler';
+    }
+  }
+
+  // $jobtitle = array('JobTitle');
+
+  // $isNewProcess = $app->loadCon($cid);
+
+  // if ($isNewProcess['JobTitle'] == 'Yes') {
+
+    //if the value of the custom field is filled in as "yes", add the Contact->New Process tag
+    $tagId = 2237;
+    $result = $app->grpAssign($cid, $tagId);
+
+    //Built a new email address based on the insured contact id number that is unique for this policy
+    $newEmail = $_POST['policy'] . "@themoneymultiplier.com";
+    //pull the old email
+    $oldEmail = $_POST['email'];
+    //update the email field and the Insured Body Email field
+    $conData = array('_InsuredBodyEmail' => $oldEmail, 'Email' => $newEmail, 'EmailAddress3' => $email3, 'OwnerID' => $ownerId, '_Owner1' => $appSpecialist);
+    // $conData = array('_InsuredBodyEmail' => $oldEmail, 'Email' => $newEmail, 'JobTitle' => '', 'EmailAddress3' => $email3, 'OwnerID' => $ownerId);
+
+    $conID = $app->updateCon($cid, $conData);
+ 
+  // }
+
+
+}
