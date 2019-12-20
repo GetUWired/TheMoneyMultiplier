@@ -180,7 +180,7 @@ if (isset($_POST['agentpw'])) {
 			$num = $_POST['agentnum'];
 			$agentpw = $_POST['agentpw'];
 
-		     if (($num == "9019" && $agentpw == 'TMMBKesler') || ($num == "9027" && $agentpw == 'TMMCNaugle') || ($num == "9029" && $agentpw == 'TMMJNelson') || ($num == "9031" && $agentpw == 'TMMJZieg') || ($num == "9131" && $agentpw == 'TMMTKesler') ){
+		     if (($num == "9019" && $agentpw == 'TMMBKesler') || ($num == "9027" && $agentpw == 'TMMCNaugle') || ($num == "9029" && $agentpw == 'TMMJNelson') || ($num == "9031" && $agentpw == 'TMMJZieg') || ($num == "9131" && $agentpw == 'TMMTKesler') || ($num == "9275" && $agentpw == 'TMMMAndrews') || ($num == "9276" && $agentpw == 'TMMMRobarge')){
 		     	create_report();
 		     } else {
 		     	$url = "https://themoneymultiplier.com/password-denied/";
@@ -241,6 +241,14 @@ if (isset($_POST['agentpw'])) {
 				case 9031:
 					echo '<h2>Josh Zieglowski - Agent Report</h2>';
 					break;
+				
+				case 9275:
+					echo '<h2>Monica Andrews - Agent Report</h2>';
+					break;
+				
+				case 9276:
+					echo '<h2>Marian Robarge - Agent Report</h2>';
+					break;
 
 				default:
 					echo '<h2>Terri Kesler - All Agent Reporting</h2>';
@@ -275,7 +283,7 @@ if (isset($_POST['agentpw'])) {
 			';
 
 			//pulls the data from the AgentReport table in the database
-			if(is_page(9019) || is_page(9027) || is_page(9029) || is_page(9031)) {
+			if(is_page(9019) || is_page(9027) || is_page(9029) || is_page(9031) || is_page(9275) || is_page(9276)) {
 				$sql = 'SELECT * FROM AgentReport ORDER BY PolicyAmt DESC';
 			} elseif (is_page(9131)) {
 				$sql = 'SELECT * FROM AgentReport ORDER BY ApplicationDate ASC';
@@ -291,9 +299,19 @@ if (isset($_POST['agentpw'])) {
 
 			//creates the rows in the report from the data in the table
 			if ($tableInfo->num_rows > 0) {
-			    // output data of each row
+			    // output data of each row			    
 			    while($row = $tableInfo->fetch_assoc()) {
 
+			    	//determining whether inforce date field is empty or filled; leave off the report if it is filled
+			    	if ($row['InforceDate'] == '') {
+			    		
+			    		$inforce = true;
+			    	} else {
+			    		
+			    		$inforce = false;
+			    	}
+
+			    	//creating rows
 			    	$include_row = '
 
 			        	<tr>
@@ -327,34 +345,47 @@ if (isset($_POST['agentpw'])) {
 			        $jn2 = in_array('Joshua Nelson', $commissionArr);
 			        $jz = in_array('Josh Zieglowski', $commissionArr);
 			        $jz2 = in_array('Joshua Zieglowski', $commissionArr);
+			        $ma = in_array('Monica Andrews', $commissionArr);
+			        $mr = in_array('Marian Robarge', $commissionArr);
 
 			        //Brent Kesler - page 9019
 			        //Chris Naugle - page 9027
 			        //Josh Nelson - page 9029
 			        //Josh Zieglowski - page 9031
 			        //Terri Kesler - page 9131
+			        //Monica Andrews - page 9275
+			        //Marian Robarge - page 9276
 
 			        // put if statement there so if it's more than one person's name
+			        if ($inforce == true) {
 
-			        if (is_page(9019) && ($bk == true)) {
-			        	echo $include_row;
+						if (is_page(9019) && ($bk == true)) {
+				        	echo $include_row;
 
-			        } elseif (is_page(9027) && ($ck == true)) {
-						echo $include_row;
+				        } elseif (is_page(9027) && ($ck == true)) {
+							echo $include_row;
 
-			        } elseif ((is_page(9029) && ($jn == true)) || (is_page(9029) && ($jn2 == true))) {
-			        	echo $include_row;
+				        } elseif (is_page(9275) && ($ma == true)) {
+							echo $include_row;
 
-			        } elseif ((is_page(9031) && ($jz == true)) || (is_page(9031) && ($jz2 == true))) {
-			        	echo $include_row;
+				        } elseif (is_page(9276) && ($mr == true)) {
+							echo $include_row;
 
-			        } elseif (is_page(9131)) {
-			        	echo $include_row;
+				        } elseif ((is_page(9029) && ($jn == true)) || (is_page(9029) && ($jn2 == true))) {
+				        	echo $include_row;
 
-			        } else {
-			        	continue;
-			    
-			        }
+				        } elseif ((is_page(9031) && ($jz == true)) || (is_page(9031) && ($jz2 == true))) {
+				        	echo $include_row;
+
+				        } elseif (is_page(9131)) {
+				        	echo $include_row;
+
+				        } else {
+				        	continue;
+				    
+				        }
+				    }
+			        
 			       
 			    }
 			} else {

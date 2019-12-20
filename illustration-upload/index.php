@@ -39,25 +39,17 @@ if (isset($_POST['id'])) {
   if ($newowner == 'Jo Sundermeyer') {
     $ownerId = 147;
     $appSpecialist = 'Jo Sundermeyer';
-  } elseif ($newowner == 'Kim Joseph') {
-    $ownerId = 4359;
-    $appSpecialist = 'Kim Joseph';
-  } elseif ($newowner == 'Hannah Kessler') {
+  } elseif ($newowner == 'Hannah Kesler') {
     $ownerId = 149;
     $appSpecialist = 'Hannah Kesler';
   } elseif ($newowner == 'Round Robin') {
-    $random = rand(1,3);
+    $random = rand(1,2);
     if ($random == 1) {
       $ownerId = 147;
       $appSpecialist = 'Jo Sundermeyer';
     }
 
     if ($random == 2) {
-      $ownerId = 4359;
-      $appSpecialist = 'Kim Joseph';
-    }
-
-    if ($random == 3) {
       $ownerId = 149;
       $appSpecialist = 'Hannah Kesler';
     }
