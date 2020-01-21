@@ -12,3 +12,6 @@
 /* =Theme customization starts here
 ------------------------------------------------------- */
 
+.et_pb_image_wrap img {
+	padding: 10px 30px;
+}

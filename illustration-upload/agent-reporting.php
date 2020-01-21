@@ -66,10 +66,10 @@ require_once 'conn.php';
 		$examDate = $examDateTrim[0];
 
 
-		$memberSignDateTime = $value['Custom_MemberSigndate'];
-		$memberDateTrim = explode("T", $memberSignDateTime);
-		$memberSignDate = $memberDateTrim[0];
-
+		// $memberSignDateTime = $value['Custom_MemberSigndate'];
+		// $memberDateTrim = explode("T", $memberSignDateTime);
+		// $memberSignDate = $memberDateTrim[0];
+		// $memberSignDate = "NA";
 
 		$insuranceApprovedDateTime = $value['Custom_InsuranceApprovedDate'];
 		$insAppDateTrim = explode("T", $insuranceApprovedDateTime);
@@ -149,16 +149,17 @@ require_once 'conn.php';
 
 
 
-
+		// MemberSignDate,
+		// $memberSignDate, 
 		// Insert each line into table AgentReport
 
-			$sql = "INSERT INTO AgentReport (Id, FirstName, LastName, PolicyAmt, PolicyCompany, Comments, ApplicationDate, SubmitInsuranceCo, ExamDate, MemberSignDate, InsuranceApprovedDate, IssuedDate, PaymentFormSignedDate, InforceDate, MappingDate, LoanRequestDate, CommissionOwner1, CommissionOwner2, CommissionOwner3, CommissionOwner4, CommissionOwner5, CommissionOwner6, CommissionOwner7, CommissionOwner8, CommissionOwner9, CommissionOwner10) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			$sql = "INSERT INTO AgentReport (Id, FirstName, LastName, PolicyAmt, PolicyCompany, Comments, ApplicationDate, SubmitInsuranceCo, ExamDate, InsuranceApprovedDate, IssuedDate, PaymentFormSignedDate, InforceDate, MappingDate, LoanRequestDate, CommissionOwner1, CommissionOwner2, CommissionOwner3, CommissionOwner4, CommissionOwner5, CommissionOwner6, CommissionOwner7, CommissionOwner8, CommissionOwner9, CommissionOwner10) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 			if(!($stmt2 = $conn->prepare($sql))) {
 				echo "insert fail: " . $conn->errno . " error " . $conn->error;
 			}
 
-			if(!$stmt2->bind_param("ississssssssssssssssssssss", $ISid, $firstName, $lastName, $policyAmt, $policyCo, $comments, $applicationDate, $submitToInsCo, $examDate, $memberSignDate, $insuranceApprovedDate, $issuedDate, $paymentFormSignedDate, $inforceDate, $mappingDate, $loanRequestApprovedDate, $commissionOwner1, $commissionOwner2, $commissionOwner3, $commissionOwner4, $commissionOwner5, $commissionOwner6,$commissionOwner7, $commissionOwner8, $commissionOwner9, $commissionOwner10)) {
+			if(!$stmt2->bind_param("ississsssssssssssssssssss", $ISid, $firstName, $lastName, $policyAmt, $policyCo, $comments, $applicationDate, $submitToInsCo, $examDate, $insuranceApprovedDate, $issuedDate, $paymentFormSignedDate, $inforceDate, $mappingDate, $loanRequestApprovedDate, $commissionOwner1, $commissionOwner2, $commissionOwner3, $commissionOwner4, $commissionOwner5, $commissionOwner6,$commissionOwner7, $commissionOwner8, $commissionOwner9, $commissionOwner10)) {
 
 				echo "bind params failed (" . $stmt2->errno . " ) " . $stmt2->error;
 			}

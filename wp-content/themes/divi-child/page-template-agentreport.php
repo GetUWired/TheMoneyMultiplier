@@ -254,7 +254,7 @@ if (isset($_POST['agentpw'])) {
 					echo '<h2>Terri Kesler - All Agent Reporting</h2>';
 					break;
 			}
-
+			// <th><div style="width: 100px; white-space: normal;">Member Sign Date</div></th>
 			//creates the column headers
 			echo '<p class="scroll">scroll &nbsp; &rarr;</p>
 				<div class="table-wrapper">
@@ -270,7 +270,6 @@ if (isset($_POST['agentpw'])) {
 								<th><div style="width: 100px; white-space: normal;">Application Date</div></th>
 								<th><div style="width: 100px; white-space: normal;">Submit to Insurance Company</div></th>
 								<th><div style="width: 100px; white-space: normal;">Exam Date</div></th>
-								<th><div style="width: 100px; white-space: normal;">Member Sign Date</div></th>
 								<th><div style="width: 100px; white-space: normal;">Insurance Approved Date</div></th>
 								<th><div style="width: 100px; white-space: normal;">Issued Date</div></th>
 								<th><div style="width: 100px; white-space: normal;">Payment Form Signed Date</div></th>
@@ -311,6 +310,7 @@ if (isset($_POST['agentpw'])) {
 			    		$inforce = false;
 			    	}
 
+	        		// <td><div style="width: 100px; white-space: normal;">' . formatDate($row['MemberSignDate']) .'</div></td>
 			    	//creating rows
 			    	$include_row = '
 
@@ -324,7 +324,6 @@ if (isset($_POST['agentpw'])) {
 			        		<td><div style="width: 100px; white-space: normal;">' . formatDate($row['ApplicationDate']) .'</div></td>
 			        		<td><div style="width: 100px; white-space: normal;">' . formatDate($row['SubmitInsuranceCo']) .'</div></td>
 			        		<td><div style="width: 100px; white-space: normal;">' . formatDate($row['ExamDate']) .'</div></td>
-			        		<td><div style="width: 100px; white-space: normal;">' . formatDate($row['MemberSignDate']) .'</div></td>
 			        		<td><div style="width: 100px; white-space: normal;">' . formatDate($row['InsuranceApprovedDate']) .'</div></td>
 			        		<td><div style="width: 100px; white-space: normal;">' . formatDate($row['IssuedDate']) .'</div></td>
 			        		<td><div style="width: 100px; white-space: normal;">' . formatDate($row['PaymentFormSignedDate']) .'</div></td>
