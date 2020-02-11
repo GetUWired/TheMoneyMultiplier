@@ -48,6 +48,10 @@ get_header();
 		vertical-align: middle;
 	}
 
+	input[type="button"] {
+		cursor: pointer;
+	}
+
 	.scroll {
 		text-align: right;
 	}
@@ -254,28 +258,32 @@ if (isset($_POST['agentpw'])) {
 					echo '<h2>Terri Kesler - All Agent Reporting</h2>';
 					break;
 			}
+
+	    	echo '<p style="margin: 15px 0 5px;"><input style="padding: 10px; font-size: 16px; font-weight: bold;color: #ffffff; background-color: #64bc46;border: 1px solid #64bc46;" type="button" value="Print Report" id="btPrint" onclick="createPrintTable()" /></p>';
+	    	echo '<p style="font-size:12px;">*For best results, change your layout to landscape when saving as a PDF or printing the report.</p>';
 			// <th><div style="width: 100px; white-space: normal;">Member Sign Date</div></th>
+			// <th><div style="width: 120px; white-space: normal;">Last Name</div></th>
+											// <th><div style="width: 85px; white-space: normal;">Mapping Date</div></th>
+								// <th><div style="width: 85px; white-space: normal;">Loan Request Approved Date</div></th>	
+			
 			//creates the column headers
 			echo '<p class="scroll">scroll &nbsp; &rarr;</p>
-				<div class="table-wrapper">
+				<div class="table-wrapper" id="print-table">
 					<table>
 						<thead>
 							<tr>
 								<th><div style="width: 55px; white-space: normal;">ID</div></th>
-								<th><div style="width: 150px; white-space: normal;">First Name</div></th>
-								<th><div style="width: 150px; white-space: normal;">Last Name</div></th>
-								<th><div style="width: 115px; white-space: normal;">Policy Amount</div></th>
-								<th><div style="width: 250px; white-space: normal;">Policy Company</div></th>
-								<th><div style="width: 400px; white-space: normal;">Comments</div></th>
-								<th><div style="width: 100px; white-space: normal;">Application Date</div></th>
-								<th><div style="width: 100px; white-space: normal;">Submit to Insurance Company</div></th>
-								<th><div style="width: 100px; white-space: normal;">Exam Date</div></th>
-								<th><div style="width: 100px; white-space: normal;">Insurance Approved Date</div></th>
-								<th><div style="width: 100px; white-space: normal;">Issued Date</div></th>
-								<th><div style="width: 100px; white-space: normal;">Payment Form Signed Date</div></th>
-								<th><div style="width: 100px; white-space: normal;">Inforce Date</div></th>
-								<th><div style="width: 100px; white-space: normal;">Mapping Date</div></th>
-								<th><div style="width: 100px; white-space: normal;">Loan Request Approved Date</div></th>			
+								<th><div style="width: 120px; white-space: normal;">Name</div></th>
+								<th><div style="width: 115px; white-space: normal;">Policy Company</div></th>
+								<th><div style="width: 100px; white-space: normal;">Policy Amount</div></th>
+								<th><div style="width: 380px; white-space: normal;">Comments</div></th>
+								<th><div style="width: 85px; white-space: normal;">Application Date</div></th>
+								<th><div style="width: 85px; white-space: normal;">Submit to Insurance Company</div></th>
+								<th><div style="width: 85px; white-space: normal;">Exam Date</div></th>
+								<th><div style="width: 85px; white-space: normal;">Insurance Approved Date</div></th>
+								<th><div style="width: 85px; white-space: normal;">Issued Date</div></th>
+								<th><div style="width: 85px; white-space: normal;">Payment Form Signed Date</div></th>
+								<th><div style="width: 85px; white-space: normal;">Inforce Date</div></th>
 							</tr>
 						</thead>
 						<tbody class="real">
@@ -311,25 +319,27 @@ if (isset($_POST['agentpw'])) {
 			    	}
 
 	        		// <td><div style="width: 100px; white-space: normal;">' . formatDate($row['MemberSignDate']) .'</div></td>
+	        		// <td><div style="width: 120px; white-space: normal;">' . $row['LastName'] .'</div></td>
+	        		// <td><div style="width: 85px; white-space: normal;">' . formatDate($row['MappingDate']) .'</div></td>
+	        		// <td><div style="width: 85px; white-space: normal;">' . formatDate($row['LoanRequestDate']) .'</div></td>
+
+
 			    	//creating rows
 			    	$include_row = '
 
 			        	<tr>
 			        		<td><div style="width: 55px; white-space: normal;">' . $row['Id'] .'</div></td>
-			        		<td><div style="width: 150px; white-space: normal;">' . $row['FirstName'] .'</div></td>
-			        		<td><div style="width: 150px; white-space: normal;">' . $row['LastName'] .'</div></td>
-			        		<td><div style="width: 115px; white-space: normal;">$' . $row['PolicyAmt'] .'</div></td>
-			        		<td><div style="width: 250px; white-space: normal;">' . $row['PolicyCompany'] .'</div></td>
-			        		<td><div style="width: 400px; white-space: normal;">' . $row['Comments'] .'</div></td>
-			        		<td><div style="width: 100px; white-space: normal;">' . formatDate($row['ApplicationDate']) .'</div></td>
-			        		<td><div style="width: 100px; white-space: normal;">' . formatDate($row['SubmitInsuranceCo']) .'</div></td>
-			        		<td><div style="width: 100px; white-space: normal;">' . formatDate($row['ExamDate']) .'</div></td>
-			        		<td><div style="width: 100px; white-space: normal;">' . formatDate($row['InsuranceApprovedDate']) .'</div></td>
-			        		<td><div style="width: 100px; white-space: normal;">' . formatDate($row['IssuedDate']) .'</div></td>
-			        		<td><div style="width: 100px; white-space: normal;">' . formatDate($row['PaymentFormSignedDate']) .'</div></td>
-			        		<td><div style="width: 100px; white-space: normal;">' . formatDate($row['InforceDate']) .'</div></td>
-			        		<td><div style="width: 100px; white-space: normal;">' . formatDate($row['MappingDate']) .'</div></td>
-			        		<td><div style="width: 100px; white-space: normal;">' . formatDate($row['LoanRequestDate']) .'</div></td>
+			        		<td><div style="width: 120px; white-space: normal;">' . $row['FirstName'] . ' '. $row['LastName'] . '</div></td>
+			        		<td><div style="width: 115px; white-space: normal;">' . $row['PolicyCompany'] .'</div></td>
+			        		<td><div style="width: 100px; white-space: normal;">$' . $row['PolicyAmt'] .'</div></td>
+			        		<td><div style="width: 380px; white-space: normal;">' . $row['Comments'] .'</div></td>
+			        		<td><div style="width: 85px; white-space: normal;">' . formatDate($row['ApplicationDate']) .'</div></td>
+			        		<td><div style="width: 85px; white-space: normal;">' . formatDate($row['SubmitInsuranceCo']) .'</div></td>
+			        		<td><div style="width: 85px; white-space: normal;">' . formatDate($row['ExamDate']) .'</div></td>
+			        		<td><div style="width: 85px; white-space: normal;">' . formatDate($row['InsuranceApprovedDate']) .'</div></td>
+			        		<td><div style="width: 85px; white-space: normal;">' . formatDate($row['IssuedDate']) .'</div></td>
+			        		<td><div style="width: 85px; white-space: normal;">' . formatDate($row['PaymentFormSignedDate']) .'</div></td>
+			        		<td><div style="width: 85px; white-space: normal;">' . formatDate($row['InforceDate']) .'</div></td>
 		        		</tr>
 			        ';
 
@@ -387,16 +397,99 @@ if (isset($_POST['agentpw'])) {
 			        
 			       
 			    }
+
+
 			} else {
 			    echo "0 results";
 			}
 			//close the connection
 			$conn->close();
 		}
+		?>
+
+		<script type="text/javascript">
+			
+			function createPrintTable() {
+
+				var today = new Date();
+				var month;
+
+				switch(today.getMonth()) {
+					case 0:
+						month = 'January';
+						break;
+					case 1:
+						month = 'February';
+						break;						
+					case 2:
+						month = 'March';
+						break;
+					case 3:
+						month = 'April';
+						break;
+					case 4:
+						month = 'May';
+						break;
+					case 5:
+						month = 'June';
+						break;
+					case 6:
+						month = 'July';
+						break;
+					case 7:
+						month = 'August';
+						break;		
+					case 8:
+						month = 'September';
+						break;
+					case 9:
+						month = 'October';
+						break;					
+					case 10:
+						month = 'November';
+						break;		
+					case 11:
+						month = 'December';
+						break;													
+					}
+
+				var date =  month + " " + today.getDate() + ', ' + today.getFullYear();
+
+				var sTable = document.getElementById('print-table').innerHTML;
+
+		        var style = "<style>";
+		        // style = style + "table {width: 100%;font: 17px Calibri;}";
+		        // style = style + "table, th, td {border: solid 1px #DDD; border-collapse: collapse;";
+		        // style = style + "padding: 2px 3px;text-align: center;}";
+
+		        style = style + "table {font-family: 'Lato', sans-serif;border-collapse: collapse;";
+		        style = style + "color: #000000;display: inline-block;margin-bottom: 50px;min-width: 100%;table-layout: fixed;}";
+		        style = style + "table thead {display: block;border-collapse: collapse;}";
+		        style = style + "table thead > tr {display: block;border-collapse: collapse;padding: 0 !important;}";
+		        style = style + "tbody {display: block;width:100%;}";
+		        style = style + "table th, table td {border: 1px solid #000000;white-space: normal;}";
+		        style = style + "table tr th {background-color: #cccccc;}";
+		        style = style + "table tr:nth-child(odd) {background-color: #cccccc;}";
+		        style = style + "</style>";
+
+		        // CREATE A WINDOW OBJECT.
+		        var win = window.open('', '', 'height=700,width=1300');
+
+		        win.document.write('<html><head>');
+		        win.document.write('<title>Agent Report</title>');   // <title> FOR PDF HEADER.
+		        win.document.write(style); // ADD STYLE INSIDE THE HEAD TAG.
+		        win.document.write('</head>');
+		        win.document.write('<body>');
+		        win.document.write("<p style='font-weight: bold; font-family: sans-serif; font-size: 15px;'>" + date + "</p>");
+		        win.document.write(sTable); // THE TABLE CONTENTS INSIDE THE BODY TAG.
+		        win.document.write('</body></html>');
+		        win.document.close();
+		        win.print();
+			}		
+		</script>
 
 
 
-	?>
 
 			</tbody>
 		</table>

@@ -42,9 +42,9 @@ if (isset($_POST['id'])) {
   } elseif ($newowner == 'Hannah Kesler') {
     $ownerId = 149;
     $appSpecialist = 'Hannah Kesler';
-  } elseif ($newowner == 'Javier Torres') {
-    $ownerId = 5255;
-    $appSpecialist = 'Javier Torres';
+  } elseif ($newowner == 'Sara Taylor') {
+    $ownerId = 5591;
+    $appSpecialist = 'Sara Taylor';
   } elseif ($newowner == 'Round Robin') {
 
     $random = rand(1,3);
@@ -60,32 +60,24 @@ if (isset($_POST['id'])) {
     }
 
     if ($random == 3) {
-      $ownerId = 5255;
-      $appSpecialist = 'Javier Torres';
+      $ownerId = 5591;
+      $appSpecialist = 'Sara Taylor';
     }
   }
 
-  // $jobtitle = array('JobTitle');
 
-  // $isNewProcess = $app->loadCon($cid);
-
-  // if ($isNewProcess['JobTitle'] == 'Yes') {
-
-    //if the value of the custom field is filled in as "yes", add the Contact->New Process tag
+    // add the Contact->New Process tag
     $tagId = 2237;
     $result = $app->grpAssign($cid, $tagId);
 
-    //Built a new email address based on the insured contact id number that is unique for this policy
+    //Build a new email address based on the insured contact id number that is unique for this policy
     $newEmail = $_POST['policy'] . "@themoneymultiplier.com";
     //pull the old email
     $oldEmail = $_POST['email'];
     //update the email field and the Insured Body Email field
     $conData = array('_InsuredBodyEmail' => $oldEmail, 'Email' => $newEmail, 'EmailAddress3' => $email3, 'OwnerID' => $ownerId, '_Owner1' => $appSpecialist);
-    // $conData = array('_InsuredBodyEmail' => $oldEmail, 'Email' => $newEmail, 'JobTitle' => '', 'EmailAddress3' => $email3, 'OwnerID' => $ownerId);
 
     $conID = $app->updateCon($cid, $conData);
- 
-  // }
 
 
 }
