@@ -45,9 +45,12 @@ if (isset($_POST['id'])) {
   } elseif ($newowner == 'Sara Taylor') {
     $ownerId = 5591;
     $appSpecialist = 'Sara Taylor';
+  } elseif ($newowner == 'Sara Taylor') {
+    $ownerId = 5673;
+    $appSpecialist = 'Shannon Stebenne';
   } elseif ($newowner == 'Round Robin') {
 
-    $random = rand(1,3);
+    $random = rand(1,4);
     
     if ($random == 1) {
       $ownerId = 147;
@@ -63,6 +66,12 @@ if (isset($_POST['id'])) {
       $ownerId = 5591;
       $appSpecialist = 'Sara Taylor';
     }
+
+    if ($random == 4) {
+      $ownerId = 5673;
+      $appSpecialist = 'Shannon Stebenne';
+    }
+
   }
 
 

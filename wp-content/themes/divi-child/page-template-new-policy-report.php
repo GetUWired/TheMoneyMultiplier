@@ -231,30 +231,30 @@ if (isset($_POST['agentpw'])) {
 			// echo "Connected successfully" . "<br/>";
 		
 			echo '<h2>New Policies - Weekly Report</h2>';
-
+			//button to print table
+			echo '<p style="margin: 15px 0 5px;"><input style="padding: 10px; font-size: 16px; font-weight: bold;color: #ffffff; background-color: #64bc46;border: 1px solid #64bc46;cursor:pointer;" type="button" value="Print Report" id="btPrint" onclick="createPrintTable()" /></p>';
+	    	echo '<p style="font-size:12px;">*For best results, change your layout to landscape when saving as a PDF or printing the report.</p>';
 			//creates the column headers
 			echo '<p class="scroll">scroll &nbsp; &rarr;</p>
-				<div class="table-wrapper">
+				<div class="table-wrapper" id="print-table">
 					<table>
 						<thead>
 							<tr>
-								<th><div style="width: 55px; white-space: normal;">ID</div></th>
-								<th><div style="width: 150px; white-space: normal;">Insured First Name</div></th>
-								<th><div style="width: 150px; white-space: normal;">Insured Last Name</div></th>
-								<th><div style="width: 150px; white-space: normal;">Policy Owner First Name</div></th>
-								<th><div style="width: 150px; white-space: normal;">Policy Owner Last Name</div></th>
-								<th><div style="width: 100px; white-space: normal;">Date Created</div></th>
-								<th><div style="width: 115px; white-space: normal;">Policy Amount</div></th>
-								<th><div style="width: 250px; white-space: normal;">Commission Owner 1/Percentage</div></th>
-								<th><div style="width: 250px; white-space: normal;">Commission Owner 2/Percentage</div></th>
-								<th><div style="width: 250px; white-space: normal;">Commission Owner 3/Percentage</div></th>
-								<th><div style="width: 250px; white-space: normal;">Commission Owner 4/Percentage</div></th>
-								<th><div style="width: 250px; white-space: normal;">Commission Owner 5/Percentage</div></th>
-								<th><div style="width: 250px; white-space: normal;">Commission Owner 6/Percentage</div></th>
-								<th><div style="width: 250px; white-space: normal;">Commission Owner 7/Percentage</div></th>
-								<th><div style="width: 250px; white-space: normal;">Commission Owner 8/Percentage</div></th>
-								<th><div style="width: 250px; white-space: normal;">Commission Owner 9/Percentage</div></th>
-								<th><div style="width: 250px; white-space: normal;">Commission Owner 10/Percentage</div></th>
+								<th><div style="width: 45px; white-space: normal;">ID</div></th>
+								<th><div class="name" style="width: 150px; white-space: normal;">Insured Name</div></th>
+								<th><div class="name" style="width: 150px; white-space: normal;">Policy Owner Name</div></th>
+								<th><div style="width: 75px; white-space: normal;">Date Created</div></th>
+								<th><div style="width: 60px; white-space: normal;">Policy Amount</div></th>
+								<th><div class="commission" style="width: 150px; white-space: normal;">Commission Owner 1 - Percentage</div></th>
+								<th><div class="commission" style="width: 150px; white-space: normal;">Commission Owner 2 - Percentage</div></th>
+								<th><div class="commission" style="width: 150px; white-space: normal;">Commission Owner 3 - Percentage</div></th>
+								<th><div class="commission" style="width: 150px; white-space: normal;">Commission Owner 4 - Percentage</div></th>
+								<th><div class="commission" style="width: 150px; white-space: normal;">Commission Owner 5 - Percentage</div></th>
+								<th><div class="commission" style="width: 150px; white-space: normal;">Commission Owner 6 - Percentage</div></th>
+								<th><div class="commission" style="width: 150px; white-space: normal;">Commission Owner 7 - Percentage</div></th>
+								<th><div class="commission" style="width: 150px; white-space: normal;">Commission Owner 8 - Percentage</div></th>
+								<th><div class="commission" style="width: 150px; white-space: normal;">Commission Owner 9 - Percentage</div></th>
+								<th><div class="commission" style="width: 150px; white-space: normal;">Commission Owner 10 - Percentage</div></th>
 							</tr>
 						</thead>
 						<tbody class="real">
@@ -276,23 +276,21 @@ if (isset($_POST['agentpw'])) {
 			    	$include_row = '
 
 			    		<tr>
-							<td><div style="width: 55px; white-space: normal;">' . $row['Id'] . '</div></td>
-							<td><div style="width: 150px; white-space: normal;">' . $row['InsuredFirstName'] . '</div></td>
-							<td><div style="width: 150px; white-space: normal;">' . $row['InsuredLastName'] . '</div></td>
-							<td><div style="width: 150px; white-space: normal;">' . $row['OwnerFirstName'] . '</div></td>
-							<td><div style="width: 150px; white-space: normal;">' . $row['OwnerLastName'] . '</div></td>
-							<td><div style="width: 100px; white-space: normal;">' . formatDate($row['DateCreated']) . '</div></td>
-							<td><div style="width: 115px; white-space: normal;">$' . $row['PolicyAmt'] .'</div></td>
-							<td><div style="width: 250px; white-space: normal;">' . $row['CommissionOwner1'] . '</div></td>
-							<td><div style="width: 250px; white-space: normal;">' . $row['CommissionOwner2'] . '</div></td>
-							<td><div style="width: 250px; white-space: normal;">' . $row['CommissionOwner3'] . '</div></td>
-							<td><div style="width: 250px; white-space: normal;">' . $row['CommissionOwner4'] . '</div></td>
-							<td><div style="width: 250px; white-space: normal;">' . $row['CommissionOwner5'] . '</div></td>
-							<td><div style="width: 250px; white-space: normal;">' . $row['CommissionOwner6'] . '</div></td>
-							<td><div style="width: 250px; white-space: normal;">' . $row['CommissionOwner7'] . '</div></td>
-							<td><div style="width: 250px; white-space: normal;">' . $row['CommissionOwner8'] . '</div></td>
-							<td><div style="width: 250px; white-space: normal;">' . $row['CommissionOwner9'] . '</div></td>
-							<td><div style="width: 250px; white-space: normal;">' . $row['CommissionOwner10'] . '</div></td>
+							<td><div style="width: 45px; white-space: normal;">' . $row['Id'] . '</div></td>
+							<td><div class="name" style="width: 150px; white-space: normal;">' . $row['InsuredFirstName'] . ' ' . $row['InsuredLastName'] .'</div></td>
+							<td><div class="name" style="width: 150px; white-space: normal;">' . $row['OwnerFirstName'] . ' ' . $row['OwnerLastName'] .'</div></td>
+							<td><div style="width: 75px; white-space: normal;">' . formatDate($row['DateCreated']) . '</div></td>
+							<td><div style="width: 60px; white-space: normal;">$' . $row['PolicyAmt'] .'</div></td>
+							<td><div class="commission" style="width: 150px; white-space: normal;">' . $row['CommissionOwner1'] . '</div></td>
+							<td><div class="commission" style="width: 150px; white-space: normal;">' . $row['CommissionOwner2'] . '</div></td>
+							<td><div class="commission" style="width: 150px; white-space: normal;">' . $row['CommissionOwner3'] . '</div></td>
+							<td><div class="commission" style="width: 150px; white-space: normal;">' . $row['CommissionOwner4'] . '</div></td>
+							<td><div class="commission" style="width: 150px; white-space: normal;">' . $row['CommissionOwner5'] . '</div></td>
+							<td><div class="commission" style="width: 150px; white-space: normal;">' . $row['CommissionOwner6'] . '</div></td>
+							<td><div class="commission" style="width: 150px; white-space: normal;">' . $row['CommissionOwner7'] . '</div></td>
+							<td><div class="commission" style="width: 150px; white-space: normal;">' . $row['CommissionOwner8'] . '</div></td>
+							<td><div class="commission" style="width: 150px; white-space: normal;">' . $row['CommissionOwner9'] . '</div></td>
+							<td><div class="commission" style="width: 150px; white-space: normal;">' . $row['CommissionOwner10'] . '</div></td>
 						</tr>
 					';
 
@@ -307,6 +305,88 @@ if (isset($_POST['agentpw'])) {
 		}
 
 ?>
+
+<script type="text/javascript">
+			
+			function createPrintTable() {
+
+				var today = new Date();
+				var month;
+
+				switch(today.getMonth()) {
+					case 0:
+						month = 'January';
+						break;
+					case 1:
+						month = 'February';
+						break;						
+					case 2:
+						month = 'March';
+						break;
+					case 3:
+						month = 'April';
+						break;
+					case 4:
+						month = 'May';
+						break;
+					case 5:
+						month = 'June';
+						break;
+					case 6:
+						month = 'July';
+						break;
+					case 7:
+						month = 'August';
+						break;		
+					case 8:
+						month = 'September';
+						break;
+					case 9:
+						month = 'October';
+						break;					
+					case 10:
+						month = 'November';
+						break;		
+					case 11:
+						month = 'December';
+						break;													
+					}
+
+				var date =  month + " " + today.getDate() + ', ' + today.getFullYear();
+
+				var sTable = document.getElementById('print-table').innerHTML;
+
+		        var style = "<style>";
+
+		        style = style + "table {font-family: 'Lato', sans-serif;border-collapse: collapse; font-size: 13px;";
+		        style = style + "color: #000000;display: inline-block;margin-bottom: 50px;min-width: 100%;table-layout: fixed;}";
+		        style = style + "table thead {display: block;border-collapse: collapse;}";
+		        style = style + "table thead > tr {display: block;border-collapse: collapse;padding: 0 !important;}";
+		        style = style + "tbody {display: block;width:100%;}";
+		        style = style + "table th, table td {border: 1px solid #000000;white-space: normal;padding: 10px 4px;}";
+		        style = style + "table tr th {background-color: #cccccc;}";
+		        style = style + "table tr:nth-child(odd) {background-color: #cccccc;}";
+		        style = style + "table thead tr th div.commission {width: 100px !important;}";
+		        style = style + "table tbody tr td div.commission {width: 100px !important;}";	
+		        style = style + "table thead tr th div.name {width: 90px !important;}";
+		        style = style + "table tbody tr td div.name {width: 90px !important;}";			        
+		        style = style + "</style>";
+
+		        // CREATE A WINDOW OBJECT.
+		        var win = window.open('', '', 'height=700,width=1300');
+
+		        win.document.write('<html><head>');
+		        win.document.write('<title>New Policies - Weekly Report</title>');   // <title> FOR PDF HEADER.
+		        win.document.write(style); // ADD STYLE INSIDE THE HEAD TAG.
+		        win.document.write('</head>');
+		        win.document.write('<body>');
+		        win.document.write("<p style='font-weight: bold; font-family: sans-serif; font-size: 15px;'>" + date + "</p>");
+		        win.document.write(sTable); // THE TABLE CONTENTS INSIDE THE BODY TAG.
+		        win.document.write('</body></html>');
+		        win.document.close();
+		        win.print();
+			}		
+		</script>
 			</tbody>
 		</table>
 	</div>	<!-- .table-wrapper -->
