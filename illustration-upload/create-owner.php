@@ -1,0 +1,109 @@
+<?php
+require_once 'conn.php';
+$mappingSpecialists = [
+    "Jonah Dew" => 27,
+    "Shannon" => 5673,
+    "Melissa Allen" => 2373,
+];
+
+function getMappingSpecialists($name){
+    global $mappingSpecialists;
+    if(!isset($mappingSpecialists[$name])){
+        $name = array_rand($mappingSpecialists);
+    }
+
+    return $mappingSpecialists[$name];
+}
+
+function isLinked($links, $contactId){
+    $linked = false;
+    if(isset($links) && is_array($links) && !empty($links)){
+        foreach ($links as $link){
+            if(isset($link["Contact.Id"]) && $link["Contact.Id"] == $contactId){
+                $linked = true;
+                break;
+            }
+        }
+    }
+    return $linked;
+}
+
+if(isset($_REQUEST["contactId"]) && is_numeric($_REQUEST["contactId"])){
+    $conId = $_REQUEST["contactId"];
+    $returnFields = [
+        "_OwnerNamePolicy1",
+        "_Policy1OwnerLastName",
+        "_InsuranceOwnerEmail",
+        "_InsuranceOwnerPhoneNumber",
+        "_OwnerofPolicyTimezone",
+        "_Company0",
+        "_PolicyAmount",
+        "_PremiumAmtmode1",
+        "_InsuredBodyFirstName",
+        "_InsuredBodyLastName",
+        "_InsuredBodyEmail",
+        "_DateofBirth",
+        "_StateOfResidence",
+        "_Gender",
+        "Email",
+        "Id",
+        "_MappingSpecialist",
+        "_CurrentPolicyNumberOfOldPolicy",
+    ];
+    $conDat = $app->loadCon($conId, $returnFields);
+    if(isset($conDat["_InsuranceOwnerEmail"])){
+        $query = ["Email" => $conDat["_InsuranceOwnerEmail"]];
+        $ownerFields = ["Email", "Id", "_Amountofopenpolicies"];
+        $owner = $app->dsQuery("Contact", 10, 0, $query, $ownerFields);
+        if(isset($owner[0]) && isset($owner[0]["Id"])){
+            $ownerId = $owner[0]["Id"];
+        } else {
+            //create a new contact
+            $ownerData = [
+                "FirstName" => (isset($conDat["_OwnerNamePolicy1"]))? $conDat["_OwnerNamePolicy1"] : "",
+                "LastName" => (isset($conDat["_Policy1OwnerLastName"]))? $conDat["_Policy1OwnerLastName"] : "",
+                "Email" => (isset($conDat["_InsuranceOwnerEmail"]))? $conDat["_InsuranceOwnerEmail"] : "",
+                "State" => (isset($conDat["_StateOfResidence"]))? $conDat["_StateOfResidence"] : "",
+                "Phone1" => (isset($conDat["_InsuranceOwnerPhoneNumber"]))? $conDat["_InsuranceOwnerPhoneNumber"] : "",
+                "_Company0" => (isset($conDat["_Company0"]))? $conDat["_Company0"] : "",
+                "_CurrentPolicyNumberOfOldPolicy" => (isset($conDat["_CurrentPolicyNumberOfOldPolicy"]))? $conDat["_CurrentPolicyNumberOfOldPolicy"] : "",
+                "ContactType" => "Owner of Policy",
+                "OwnerID" => (isset($conDat["_MappingSpecialist"])) ? getMappingSpecialists($conDat["_MappingSpecialist"]) : getMappingSpecialists("Round Robin")
+            ];
+            $ownerId = $app->addCon($ownerData);
+            $app->optIn($conDat["_InsuranceOwnerEmail"], "Opted in via API");
+        }
+
+        if(isset($ownerId) && is_numeric($ownerId)){
+            $links = $app->listLinkedContacts($ownerId);
+            if(!isLinked($links, $conId)){
+                if(!isset($owner[0]["_Amountofopenpolicies"])){
+                    $policies = 1;
+                } else {
+                    $policies = intval($owner[0]["_Amountofopenpolicies"])+1;
+                }
+                $app->updateCon($ownerId, ["_Amountofopenpolicies" => $policies]);
+                $success = $app->linkContacts($conId, $ownerId, 1);
+                ob_start();?>
+Company: <?php echo $conDat["_Company0"]; echo chr(10);?>
+Insured Body: <?php echo $conDat["_InsuredBodyFirstName"];?> <?php echo $conDat["_InsuredBodyLastName"]; echo chr(10);?>
+Policy Amount: <?php echo $conDat["_PolicyAmount"]; echo chr(10);?>
+Premium Frequency: <?php echo $conDat["_PremiumAmtmode1"]; echo chr(10);?>
+                <?php
+                $description = ob_get_clean();
+                $noteFields = [
+                    "ActionDescription" => "Policy: ".$conDat["_Company0"]." | $".$conDat["_PolicyAmount"],
+                    "CreationNotes" => $description,
+                    "ContactId" => $ownerId,
+                    "ObjectType" => "Note",
+                    "IsAppointment" => 0,
+                ];
+                $value = $app->dsAdd("ContactAction", $noteFields);
+            }
+        }
+        $app->grpAssign($ownerId, 5401); //applies Contact -> Owner Process
+        $app->grpAssign($ownerId, 5397); //applies Mapping -> Mapping Started
+
+    }
+    $result = $app->grpAssign($conId, 5395); // applies Mapping -> Owner Created
+}

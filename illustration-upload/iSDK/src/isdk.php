@@ -590,6 +590,28 @@ class iSDK
     }
 
     /**
+     * @param $contactId1
+     * @param $contactId2
+     * @return int|mixed|string
+     * @throws iSDKException
+     */
+    public function linkContacts($contactId1, $contactId2, $type){
+        $carray = array(
+            php_xmlrpc_encode((int)$contactId1),
+            php_xmlrpc_encode((int)$contactId2),
+            php_xmlrpc_encode((int)$type),
+        );
+        return $this->methodCaller("ContactService.linkContacts", $carray);
+    }
+
+    public function listLinkedContacts($contactId){
+        $carray = array(
+            php_xmlrpc_encode((int)$contactId),
+        );
+        return $this->methodCaller("ContactService.listLinkedContacts", $carray);
+    }
+
+    /**
      * @method runActionSequence
      * @description run an actionset on a contact
      * @param int $cid

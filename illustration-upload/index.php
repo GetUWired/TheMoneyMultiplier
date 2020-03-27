@@ -45,7 +45,7 @@ if (isset($_POST['id'])) {
   } elseif ($newowner == 'Sara Taylor') {
     $ownerId = 5591;
     $appSpecialist = 'Sara Taylor';
-  } elseif ($newowner == 'Sara Taylor') {
+  } elseif ($newowner == 'Shannon Stebenne') {
     $ownerId = 5673;
     $appSpecialist = 'Shannon Stebenne';
   } elseif ($newowner == 'Round Robin') {
