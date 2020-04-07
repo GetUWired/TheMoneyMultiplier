@@ -116,6 +116,16 @@ switch ($monthnum) {
     	break;
     }
 
+if($form_data['field'][64] == 'Jonah') {
+    $mappingSpecialistEmail = 'jonah@themoneymultiplier.com';
+} elseif ($form_data['field'][64] == 'Shannon'){
+    $mappingSpecialistEmail = 'shannon@themoneymultiplier.com';   
+} else {
+    $mappingSpecialistEmail = 'terri@themoneymultiplier.com';
+}
+
+echo "field: " . $form_data['field'][64];
+echo "mapping email: " . $mappingSpecialistEmail;
 
 
 /*
@@ -163,8 +173,14 @@ if ( ! empty( $form_data['field'][5][0] ) ) {
 	$w->add( str_replace( '$', '', $form_data['field'][19] ), [ 60.4, 202.8, 36, 4 ] ); /* Gross Amount */
 }
 
+
+
 $w->tick( [18.2, 207.5 ] ); /* Send by Electronic Transfer Fund */
-$w->add( 'Send funds to EFT account on file. Contact jonah@themoneymultiplier.com with questions.', [ 56.4, 207, 150, 4 ] ); /* Special instructions */
+$w->add( 'Send funds to EFT account on file. Contact ' . $mappingSpecialistEmail . ' with questions.', [ 56.4, 207, 150, 4 ] ); /* Special instructions */
+
+// $w->add( 'Send funds to EFT account on file. Contact ' . $mappingSpecialistEmail . ' with questions.', [ 56.4, 207, 150, 4 ] ); /* Special instructions 
+
+
 
 /*
  * LOAD PAGE 2

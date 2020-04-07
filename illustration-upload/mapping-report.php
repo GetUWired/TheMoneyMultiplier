@@ -33,9 +33,9 @@ require_once 'conn.php';
 	// pull the saved search from Infusionsoft (an array)
 	$allMappingReporting = $app->savedSearchAllFields($mappingReportId, $userId, 0);
 
-	echo "<pre>";
-	print_r($mappingReporting);
-	echo "</pre>";
+	// echo "<pre>";
+	// print_r($allMappingReporting);
+	// echo "</pre>";
 
 
 	foreach ($allMappingReporting as $key => $value) {

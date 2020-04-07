@@ -34,9 +34,9 @@ require_once 'conn.php';
 	$allNewPolicies = $app->savedSearchAllFields($agentReportId, $userId, 0);
 
 	foreach ($allNewPolicies as $key => $value) {
-		echo '<pre>';
-		print_r($value);
-		echo '</pre>';
+		// echo '<pre>';
+		// print_r($value);
+		// echo '</pre>';
 
 		// pull values from the saved search (an array)
 		$ISid = $value['Id'];
