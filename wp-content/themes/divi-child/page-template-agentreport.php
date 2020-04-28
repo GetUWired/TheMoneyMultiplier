@@ -262,13 +262,14 @@ if (isset($_POST['agentpw'])) {
 	    	echo '<p style="margin: 15px 0 5px;"><input style="padding: 10px; font-size: 16px; font-weight: bold;color: #ffffff; background-color: #64bc46;border: 1px solid #64bc46;" type="button" value="Print Report" id="btPrint" onclick="createPrintTable()" /></p>';
 	    	echo '<p style="font-size:12px;">*For best results, change your layout to landscape when saving as a PDF or printing the report.</p>';
 
-			
+								// <th><div style="width: 55px; white-space: normal;">Row</div></th>			
 			//creates the column headers
 			echo '<p class="scroll">scroll &nbsp; &rarr;</p>
 				<div class="table-wrapper" id="print-table">
 					<table>
 						<thead>
 							<tr>
+							    <th><div style="width: 35px; white-space: normal;">Row</div></th>	
 								<th><div style="width: 55px; white-space: normal;">ID</div></th>
 								<th><div style="width: 120px; white-space: normal;">Name</div></th>
 								<th><div style="width: 115px; white-space: normal;">Policy Company</div></th>
@@ -303,7 +304,8 @@ if (isset($_POST['agentpw'])) {
 
 			//creates the rows in the report from the data in the table
 			if ($tableInfo->num_rows > 0) {
-			    // output data of each row			    
+			    // output data of each row	
+			    $rowNum = 1;		    
 			    while($row = $tableInfo->fetch_assoc()) {
 
 			    	//determining whether inforce date field is empty or filled; leave off the report if it is filled
@@ -311,15 +313,16 @@ if (isset($_POST['agentpw'])) {
 			    		
 			    		$inforce = true;
 			    	} else {
-			    		
+			    		// $inforce = true;
 			    		$inforce = false;
 			    	}
 
-
+// <td><div style="width: 55px; white-space: normal;">' . $rowNum .'</div></td>
 			    	//creating rows
 			    	$include_row = '
 
 			        	<tr>
+				            <td><div style="width: 35px; white-space: normal;">' . $rowNum .'</div></td>	
 			        		<td><div style="width: 55px; white-space: normal;">' . $row['Id'] .'</div></td>
 			        		<td><div style="width: 120px; white-space: normal;">' . $row['FirstName'] . ' '. $row['LastName'] . '</div></td>
 			        		<td><div style="width: 115px; white-space: normal;">' . $row['PolicyCompany'] .'</div></td>
@@ -386,7 +389,7 @@ if (isset($_POST['agentpw'])) {
 				    
 				        }
 				    }
-			        
+			      $rowNum++;  
 			       
 			    }
 

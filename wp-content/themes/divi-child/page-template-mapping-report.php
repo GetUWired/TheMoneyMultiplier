@@ -239,6 +239,7 @@ if (isset($_POST['mappingpw'])) {
 					<table>
 						<thead>
 							<tr>
+								<th><div style="width: 35px; white-space: normal;">Row</div></th>							
 								<th><div style="width: 55px; white-space: normal;">ID</div></th>
 								<th><div style="width: 140px; white-space: normal;">Name</div></th>
 								<th><div style="width: 380px; white-space: normal;">Comments</div></th>
@@ -266,13 +267,15 @@ if (isset($_POST['mappingpw'])) {
 
 			//creates the rows in the report from the data in the table
 			if ($tableInfo->num_rows > 0) {
-			    // output data of each row			    
+			    // output data of each row	
+			    $rowNum = 1;		    
 			    while($row = $tableInfo->fetch_assoc()) {			
 
 			    	//creating rows
 			    	$include_row = '
 
 			        	<tr>
+				        	<td><div style="width: 35px; white-space: normal;">' . $rowNum .'</div></td>
 			        		<td><div style="width: 55px; white-space: normal;">' . $row['Id'] .'</div></td>
 			        		<td><div style="width: 140px; white-space: normal;">' . $row['FirstName'] . ' '. $row['LastName'] . '</div></td>
 			        		<td><div style="width: 380px; white-space: normal;">' . $row['Comments'] .'</div></td>
@@ -283,7 +286,7 @@ if (isset($_POST['mappingpw'])) {
 			        ';
 
 			        echo $include_row;
-
+			        $rowNum++;
 				}
 			
 			} else {

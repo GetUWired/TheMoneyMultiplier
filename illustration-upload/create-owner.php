@@ -47,7 +47,7 @@ if(isset($_REQUEST["contactId"]) && is_numeric($_REQUEST["contactId"])){
         "_Gender",
         "Email",
         "Id",
-        "_MappingSpecialist",
+        "_MappingSpecialist1",
         "_CurrentPolicyNumberOfOldPolicy",
     ];
     $conDat = $app->loadCon($conId, $returnFields);
@@ -68,7 +68,7 @@ if(isset($_REQUEST["contactId"]) && is_numeric($_REQUEST["contactId"])){
                 "_Company0" => (isset($conDat["_Company0"]))? $conDat["_Company0"] : "",
                 "_CurrentPolicyNumberOfOldPolicy" => (isset($conDat["_CurrentPolicyNumberOfOldPolicy"]))? $conDat["_CurrentPolicyNumberOfOldPolicy"] : "",
                 "ContactType" => "Owner of Policy",
-                "OwnerID" => (isset($conDat["_MappingSpecialist"])) ? getMappingSpecialists($conDat["_MappingSpecialist"]) : getMappingSpecialists("Round Robin")
+                "OwnerID" => (isset($conDat["_MappingSpecialist1"])) ? getMappingSpecialists($conDat["_MappingSpecialist1"]) : getMappingSpecialists("Round Robin")
             ];
             $ownerId = $app->addCon($ownerData);
             $app->optIn($conDat["_InsuranceOwnerEmail"], "Opted in via API");
@@ -103,6 +103,7 @@ Premium Frequency: <?php echo $conDat["_PremiumAmtmode1"]; echo chr(10);?>
         }
         $app->grpAssign($ownerId, 5401); //applies Contact -> Owner Process
         $app->grpAssign($ownerId, 5397); //applies Mapping -> Mapping Started
+         $app->grpAssign($ownerId, 5923);  //applies Inforce -> Send Inforce Email     
 
     }
     $result = $app->grpAssign($conId, 5395); // applies Mapping -> Owner Created

@@ -239,6 +239,7 @@ if (isset($_POST['monthlypw'])) {
 					<table>
 						<thead>
 							<tr>
+								<th><div style="width: 35px; white-space: normal;">Row</div></th>
 								<th><div style="width: 55px; white-space: normal;">ID</div></th>
 								<th><div style="width: 150px; white-space: normal;">Insured Name</div></th>
 								<th><div style="width: 65px; white-space: normal;">Policy Amount</div></th>
@@ -266,13 +267,15 @@ if (isset($_POST['monthlypw'])) {
 
 			//creates the rows in the report from the data in the table
 			if ($monthlyReportInfo->num_rows > 0) {
-			    // output data of each row			    
+			    // output data of each row		
+			    $rowNum = 1;	    
 			    while($row = $monthlyReportInfo->fetch_assoc()) {
 
 			    	//creating rows
 			    	$include_row = '
 
 			    		<tr>
+							<td><div style="width: 35px; white-space: normal;">' . $rowNum . '</div></td>
 							<td><div style="width: 55px; white-space: normal;">' . $row['Id'] . '</div></td>
 							<td><div style="width: 150px; white-space: normal;">' . $row['InsuredFirstName'] . ' ' . $row['InsuredLastName'] . '</div></td>
 							<td><div style="width: 65px; white-space: normal;">$' . $row['PolicyAmt'] .'</div></td>
@@ -291,6 +294,7 @@ if (isset($_POST['monthlypw'])) {
 					';
 
 					echo $include_row;
+					$rowNum++;
 			    }
 
 			} else {
@@ -363,8 +367,8 @@ if (isset($_POST['monthlypw'])) {
 		        style = style + "table th, table td {border: 1px solid #000000;white-space: normal;padding: 10px 4px;}";
 		        style = style + "table tr th {background-color: #cccccc;}";
 		        style = style + "table tr:nth-child(odd) {background-color: #cccccc;}";
-		        style = style + "table thead tr th div.commission {width: 100px !important;}";
-		        style = style + "table tbody tr td div.commission {width: 100px !important;}";		        
+		        style = style + "table thead tr th div.commission {width: 93px !important;}";
+		        style = style + "table tbody tr td div.commission {width: 93px !important;}";		        
 		        style = style + "</style>";
 
 		        // CREATE A WINDOW OBJECT.
