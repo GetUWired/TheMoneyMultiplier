@@ -2,8 +2,7 @@
 require_once 'conn.php';
 $mappingSpecialists = [
     "Jonah Dew" => 27,
-    "Shannon" => 5673,
-    "Melissa Allen" => 2373,
+    "Parker Dye" => 6859,
 ];
 
 function getMappingSpecialists($name){
@@ -51,6 +50,8 @@ if(isset($_REQUEST["contactId"]) && is_numeric($_REQUEST["contactId"])){
         "_CurrentPolicyNumberOfOldPolicy",
     ];
     $conDat = $app->loadCon($conId, $returnFields);
+
+
     if(isset($conDat["_InsuranceOwnerEmail"])){
         $query = ["Email" => $conDat["_InsuranceOwnerEmail"]];
         $ownerFields = ["Email", "Id", "_Amountofopenpolicies"];
@@ -59,6 +60,7 @@ if(isset($_REQUEST["contactId"]) && is_numeric($_REQUEST["contactId"])){
             $ownerId = $owner[0]["Id"];
         } else {
             //create a new contact
+			$mappingSpecialistID = (isset($conDat["_MappingSpecialist1"])) ? getMappingSpecialists($conDat["_MappingSpecialist1"]) : getMappingSpecialists("Round Robin");
             $ownerData = [
                 "FirstName" => (isset($conDat["_OwnerNamePolicy1"]))? $conDat["_OwnerNamePolicy1"] : "",
                 "LastName" => (isset($conDat["_Policy1OwnerLastName"]))? $conDat["_Policy1OwnerLastName"] : "",
@@ -68,13 +70,21 @@ if(isset($_REQUEST["contactId"]) && is_numeric($_REQUEST["contactId"])){
                 "_Company0" => (isset($conDat["_Company0"]))? $conDat["_Company0"] : "",
                 "_CurrentPolicyNumberOfOldPolicy" => (isset($conDat["_CurrentPolicyNumberOfOldPolicy"]))? $conDat["_CurrentPolicyNumberOfOldPolicy"] : "",
                 "ContactType" => "Owner of Policy",
-                "OwnerID" => (isset($conDat["_MappingSpecialist1"])) ? getMappingSpecialists($conDat["_MappingSpecialist1"]) : getMappingSpecialists("Round Robin")
+                "OwnerID" => $mappingSpecialistID
             ];
             $ownerId = $app->addCon($ownerData);
+
             $app->optIn($conDat["_InsuranceOwnerEmail"], "Opted in via API");
         }
 
         if(isset($ownerId) && is_numeric($ownerId)){
+
+
+            // $returnFields2 = array("OwnerID");
+            // $condat2 = $app->loadCon($ownerId, $returnFields2);
+            // $updateOwner =  array("_MappingSpecialist1" => $returnFields2);
+            // $updatedOwner = $app->updateCon($ownerId, $updateOwner);
+
             $links = $app->listLinkedContacts($ownerId);
             if(!isLinked($links, $conId)){
                 if(!isset($owner[0]["_Amountofopenpolicies"])){
@@ -85,10 +95,12 @@ if(isset($_REQUEST["contactId"]) && is_numeric($_REQUEST["contactId"])){
                 $app->updateCon($ownerId, ["_Amountofopenpolicies" => $policies]);
                 $success = $app->linkContacts($conId, $ownerId, 1);
                 ob_start();?>
-Company: <?php echo $conDat["_Company0"]; echo chr(10);?>
-Insured Body: <?php echo $conDat["_InsuredBodyFirstName"];?> <?php echo $conDat["_InsuredBodyLastName"]; echo chr(10);?>
-Policy Amount: <?php echo $conDat["_PolicyAmount"]; echo chr(10);?>
-Premium Frequency: <?php echo $conDat["_PremiumAmtmode1"]; echo chr(10);?>
+
+                Company: <?php echo $conDat["_Company0"]; echo chr(10);?>
+                Insured Body: <?php echo $conDat["_InsuredBodyFirstName"];?> <?php echo $conDat["_InsuredBodyLastName"]; echo chr(10);?>
+                Policy Amount: <?php echo $conDat["_PolicyAmount"]; echo chr(10);?>
+                Premium Frequency: <?php echo $conDat["_PremiumAmtmode1"]; echo chr(10);?>
+                
                 <?php
                 $description = ob_get_clean();
                 $noteFields = [
@@ -100,6 +112,16 @@ Premium Frequency: <?php echo $conDat["_PremiumAmtmode1"]; echo chr(10);?>
                 ];
                 $value = $app->dsAdd("ContactAction", $noteFields);
             }
+
+            if(!isset($conDat["_MappingSpecialist1"])) {
+
+                
+                $mapSpecialistName = array_search($mappingSpecialistID, $mappingSpecialists);
+                $data = array("_MappingSpecialist1" => $mapSpecialistName);
+
+                $updatedMapSpecialist = $app->updateCon($conId, $data);
+            }
+
         }
         $app->grpAssign($ownerId, 5401); //applies Contact -> Owner Process
         $app->grpAssign($ownerId, 5397); //applies Mapping -> Mapping Started

@@ -317,7 +317,6 @@ if (isset($_POST['agentpw'])) {
 			    		$inforce = false;
 			    	}
 
-// <td><div style="width: 55px; white-space: normal;">' . $rowNum .'</div></td>
 			    	//creating rows
 			    	$include_row = '
 
@@ -365,31 +364,32 @@ if (isset($_POST['agentpw'])) {
 
 						if (is_page(9019) && ($bk == true)) {
 				        	echo $include_row;
-
+					        $rowNum++;  
 				        } elseif (is_page(9027) && ($ck == true)) {
 							echo $include_row;
+					        $rowNum++;  
 
 				        } elseif (is_page(9275) && ($ma == true)) {
 							echo $include_row;
-
+					        $rowNum++;  
 				        } elseif (is_page(9276) && ($mr == true)) {
 							echo $include_row;
-
+					        $rowNum++;  
 				        } elseif ((is_page(9029) && ($jn == true)) || (is_page(9029) && ($jn2 == true))) {
 				        	echo $include_row;
-
+					        $rowNum++;  
 				        } elseif ((is_page(9031) && ($jz == true)) || (is_page(9031) && ($jz2 == true))) {
 				        	echo $include_row;
-
+					        $rowNum++;  
 				        } elseif (is_page(9131)) {
 				        	echo $include_row;
-
+					        $rowNum++;  
 				        } else {
 				        	continue;
 				    
 				        }
 				    }
-			      $rowNum++;  
+			      // $rowNum++;  
 			       
 			    }
 
