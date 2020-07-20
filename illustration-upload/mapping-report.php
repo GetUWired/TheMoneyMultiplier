@@ -44,6 +44,9 @@ require_once 'conn.php';
 		$ISid = $value['Id'];
 		$firstName = $value['ContactName.firstName'];
 		$lastName = $value['ContactName.lastName'];
+		$mappingSpecialist = $value['Owner'];
+
+		// echo $mappingSpecialist;
 
 		$commentsWithSingleQuote = $value['ContactNotes'];
 		$commentWithSub = str_replace("'", "_", $commentsWithSingleQuote);
@@ -69,13 +72,15 @@ require_once 'conn.php';
 		$loanRequestApprovedDate = $loanDateTrim[0];
 
 
-		$sql = "INSERT INTO MappingReport (Id, FirstName, LastName, Comments, MappingCompleteDate, NextMappingDate, LoanRequestDate) VALUES (?,?,?,?,?,?,?)";
+
+
+		$sql = "INSERT INTO MappingReport (Id, FirstName, LastName, Comments, MappingCompleteDate, NextMappingDate, LoanRequestDate, MappingSpecialist) VALUES (?,?,?,?,?,?,?,?)";
 
 		if(!($stmt2 = $conn->prepare($sql))) {
 			echo "insert fail: " . $conn->errno . " error " . $conn->error;
 		}	
 
-		if(!$stmt2->bind_param("issssss", $ISid, $firstName, $lastName, $comments, $mappingDate, $nextMappingDate, $loanRequestApprovedDate)) {
+		if(!$stmt2->bind_param("isssssss", $ISid, $firstName, $lastName, $comments, $mappingDate, $nextMappingDate, $loanRequestApprovedDate, $mappingSpecialist)) {
 
 			echo "bind params failed (" . $stmt2->errno . " ) " . $stmt2->error;
 		}

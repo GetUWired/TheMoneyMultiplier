@@ -242,6 +242,7 @@ if (isset($_POST['mappingpw'])) {
 								<th><div style="width: 35px; white-space: normal;">Row</div></th>							
 								<th><div style="width: 55px; white-space: normal;">ID</div></th>
 								<th><div style="width: 140px; white-space: normal;">Name</div></th>
+								<th><div style="width: 140px; white-space: normal;">Mapping Specialist</div></th>
 								<th><div style="width: 380px; white-space: normal;">Comments</div></th>
 								<th><div style="width:115px; white-space: normal;">Mapping Date</div></th>
 								<th><div style="width: 115px; white-space: normal;">Next Mapping Date</div></th>
@@ -252,7 +253,7 @@ if (isset($_POST['mappingpw'])) {
 			';
 
 			//pull data from Mapping Report table in the database, ordering by last name.
-			$sql = 'SELECT * FROM MappingReport ORDER BY LastName ASC';
+			$sql = 'SELECT * FROM MappingReport ORDER BY MappingSpecialist, LastName ASC';
 
 			$stmt = $conn->prepare($sql);
 			$stmt->execute();
@@ -278,6 +279,7 @@ if (isset($_POST['mappingpw'])) {
 				        	<td><div style="width: 35px; white-space: normal;">' . $rowNum .'</div></td>
 			        		<td><div style="width: 55px; white-space: normal;">' . $row['Id'] .'</div></td>
 			        		<td><div style="width: 140px; white-space: normal;">' . $row['FirstName'] . ' '. $row['LastName'] . '</div></td>
+			        		<td><div style="width: 140px; white-space: normal;">' . $row['MappingSpecialist'] .'</div></td>
 			        		<td><div style="width: 380px; white-space: normal;">' . $row['Comments'] .'</div></td>
 			        		<td><div style="width: 115px; white-space: normal;">' . formatDate($row['MappingCompleteDate']) .'</div></td>
 			        		<td><div style="width: 115px; white-space: normal;">' . formatDate($row['NextMappingDate']) .'</div></td>
