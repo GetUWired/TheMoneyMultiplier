@@ -184,7 +184,7 @@ if (isset($_POST['agentpw'])) {
 			$num = $_POST['agentnum'];
 			$agentpw = $_POST['agentpw'];
 
-		     if (($num == "9019" && $agentpw == 'TMMBKesler') || ($num == "9027" && $agentpw == 'TMMCNaugle') || ($num == "9029" && $agentpw == 'TMMJNelson') || ($num == "9031" && $agentpw == 'TMMJZieg') || ($num == "9131" && $agentpw == 'TMMTKesler') || ($num == "9275" && $agentpw == 'TMMMAndrews') || ($num == "9276" && $agentpw == 'TMMMRobarge')){
+		     if (($num == "9019" && $agentpw == 'TMMBKesler') || ($num == "9027" && $agentpw == 'TMMCNaugle') || ($num == "9029" && $agentpw == 'TMMJNelson') || ($num == "9031" && $agentpw == 'TMMJZieg') || ($num == "9131" && $agentpw == 'TMMTKesler') || ($num == "9275" && $agentpw == 'TMMMAndrews') || ($num == "9276" && $agentpw == 'TMMMRobarge') || ($num == "10575" && $agentpw == 'TMMJDew')){
 		     	create_report();
 		     } else {
 		     	$url = "https://themoneymultiplier.com/password-denied/";
@@ -254,6 +254,10 @@ if (isset($_POST['agentpw'])) {
 					echo '<h2>Marian Robarge - Agent Report</h2>';
 					break;
 
+				case 10575:
+					echo '<h2>Jonah Dew - Agent Report</h2>';
+					break;
+
 				default:
 					echo '<h2>Terri Kesler - All Agent Reporting</h2>';
 					break;
@@ -288,7 +292,7 @@ if (isset($_POST['agentpw'])) {
 			';
 
 			//pulls the data from the AgentReport table in the database
-			if(is_page(9019) || is_page(9027) || is_page(9029) || is_page(9031) || is_page(9275) || is_page(9276)) {
+			if(is_page(9019) || is_page(9027) || is_page(9029) || is_page(9031) || is_page(9275) || is_page(9276) || is_page(10575)) {
 				$sql = 'SELECT * FROM AgentReport ORDER BY PolicyAmt DESC';
 			} elseif (is_page(9131)) {
 				$sql = 'SELECT * FROM AgentReport ORDER BY ApplicationDate ASC';
@@ -350,6 +354,7 @@ if (isset($_POST['agentpw'])) {
 			        $jz2 = in_array('Joshua Zieglowski', $commissionArr);
 			        $ma = in_array('Monica Andrews', $commissionArr);
 			        $mr = in_array('Marian Robarge', $commissionArr);
+			        $jd = in_array('Jonah Dew', $commissionArr);
 
 			        //Brent Kesler - page 9019
 			        //Chris Naugle - page 9027
@@ -358,6 +363,7 @@ if (isset($_POST['agentpw'])) {
 			        //Terri Kesler - page 9131
 			        //Monica Andrews - page 9275
 			        //Marian Robarge - page 9276
+			        //Jonah Dew - page 10575
 
 			        // put if statement there so if it's more than one person's name
 			        if ($inforce == true) {
@@ -373,6 +379,9 @@ if (isset($_POST['agentpw'])) {
 							echo $include_row;
 					        $rowNum++;  
 				        } elseif (is_page(9276) && ($mr == true)) {
+							echo $include_row;
+					        $rowNum++;  
+				        } elseif (is_page(10575) && ($jd == true)) {
 							echo $include_row;
 					        $rowNum++;  
 				        } elseif ((is_page(9029) && ($jn == true)) || (is_page(9029) && ($jn2 == true))) {
