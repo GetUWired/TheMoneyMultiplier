@@ -2,6 +2,10 @@
 
 <?php
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 require_once 'conn.php';
 
 //$app was set in conn.php
@@ -28,14 +32,20 @@ require_once 'conn.php';
 	$stmt->close();
 
 	// identify the id of the Agent Report in Infusionsoft
-	$agentReportId = 25;
+	// $agentReportId = 25;
+	$agentReportId = 93;
 	// identify the user who created the Agent Report in Infusionsoft
 	$userId = 2373;
 	// pull the saved search from Infusionsoft (an array)
 	$allAgentReporting = $app->savedSearchAllFields($agentReportId, $userId, 0);
 
+	echo "<pre>";
+	// print_r($allAgentReporting);
+	echo "</pre>";
+
 	foreach ($allAgentReporting as $key => $value) {
 
+		// echo "inside";
 
 		// pull values from the saved search (an array)
 		$ISid = $value['Id'];
@@ -154,11 +164,13 @@ require_once 'conn.php';
 				echo "bind params failed (" . $stmt2->errno . " ) " . $stmt2->error;
 			}
 
+
 			$stmt2->execute();
 
 			echo "success new records" . "<br/>";
 
 	}
+
 
 	$stmt2->close();
 	//close the connection

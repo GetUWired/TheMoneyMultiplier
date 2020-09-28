@@ -15,3 +15,11 @@
 .et_pb_image_wrap img {
 	padding: 10px 30px;
 }
+
+a.icon-button.people-iconpreappbtn {
+	display: none;
+}
+
+a.icon-button {
+	/*display: none;*/
+}
