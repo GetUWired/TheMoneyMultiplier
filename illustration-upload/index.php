@@ -45,12 +45,15 @@ if (isset($_POST['id'])) {
   } elseif ($newowner == 'Sara Taylor') {
     $ownerId = 5591;
     $appSpecialist = 'Sara Taylor';
-  } elseif ($newowner == 'Shannon Stebenne') {
-    $ownerId = 5673;
-    $appSpecialist = 'Shannon Stebenne';
+  } elseif ($newowner == 'Sandra Fry') {
+    $ownerId = 9639;
+    $appSpecialist = 'Sandra Fry';
+  } elseif ($newowner == 'Wendi Tripp') {
+    $ownerId = 14575;
+    $appSpecialist = 'Wendi';
   } elseif ($newowner == 'Round Robin') {
 
-    $random = rand(1,4);
+    $random = rand(1,5);
     
     if ($random == 1) {
       $ownerId = 147;
@@ -66,11 +69,15 @@ if (isset($_POST['id'])) {
       $ownerId = 5591;
       $appSpecialist = 'Sara Taylor';
     }
-
     if ($random == 4) {
-      $ownerId = 5673;
-      $appSpecialist = 'Shannon Stebenne';
+      $ownerId = 9639;
+      $appSpecialist = 'Sandra Fry';
     }
+
+    if ($random == 5) {
+      $ownerId = 14575;
+      $appSpecialist = 'Wendi';
+    }    
 
   }
 
@@ -84,7 +91,7 @@ if (isset($_POST['id'])) {
     //pull the old email
     $oldEmail = $_POST['email'];
     //update the email field and the Insured Body Email field
-    $conData = array('_InsuredBodyEmail' => $oldEmail, 'Email' => $newEmail, 'EmailAddress3' => $email3, 'OwnerID' => $ownerId, '_Owner1' => $appSpecialist);
+    $conData = array('_InsuredBodyEmail' => $oldEmail, 'Email' => $newEmail, 'EmailAddress3' => $email3, 'OwnerID' => $ownerId, '_Owner1' => $appSpecialist, '_ContactID' => $cid);
 
     $conID = $app->updateCon($cid, $conData);
 

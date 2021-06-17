@@ -53,7 +53,7 @@ if (isset($_POST['id']) && isset($_POST['fileurl'])) {
 }else {
   $cid = $_POST['id'];
 
-  echo "cid is here: " .$cid . " ";
+  echo "Contact ID is: " .$cid . " ";
 
   // $url = $$_POST['fileurl'];
 
@@ -64,7 +64,7 @@ if (isset($_POST['id']) && isset($_POST['fileurl'])) {
 
   //error_log("Begin file upload for ".$cid." at ".date("m/d/Y H:i:s", 3, "upload_log.txt");
 
-	echo "stuff isn't set right";
+	echo "An error occurred.";
 
 	// log other stuff to the same file
 //error_log("End file upload for ".$cid.PHP_EOL.PHP_EOL, 3, "upload_log.txt"):

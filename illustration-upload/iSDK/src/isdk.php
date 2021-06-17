@@ -9,7 +9,7 @@
  */
 
 if (!function_exists('xmlrpc_encode_entitites')) {
-    include("xmlrpc-3.0/lib/xmlrpc.inc");
+    include("phpxmlrpc-4.3.1/lib/xmlrpc.inc");
 }
 
 class iSDKException extends Exception

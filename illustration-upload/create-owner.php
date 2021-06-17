@@ -2,7 +2,9 @@
 require_once 'conn.php';
 $mappingSpecialists = [
     "Jonah Dew" => 27,
-    "Parker Dye" => 6859,
+    "Andrew Chesnutt" => 12167,
+    "Jerome Marquardt" => 13105,
+    "Terri Kesler" => 1
 ];
 
 function getMappingSpecialists($name){
@@ -58,6 +60,7 @@ if(isset($_REQUEST["contactId"]) && is_numeric($_REQUEST["contactId"])){
         $owner = $app->dsQuery("Contact", 10, 0, $query, $ownerFields);
         if(isset($owner[0]) && isset($owner[0]["Id"])){
             $ownerId = $owner[0]["Id"];
+
         } else {
             //create a new contact
 			$mappingSpecialistID = (isset($conDat["_MappingSpecialist1"])) ? getMappingSpecialists($conDat["_MappingSpecialist1"]) : getMappingSpecialists("Round Robin");
@@ -75,7 +78,10 @@ if(isset($_REQUEST["contactId"]) && is_numeric($_REQUEST["contactId"])){
             $ownerId = $app->addCon($ownerData);
 
             $app->optIn($conDat["_InsuranceOwnerEmail"], "Opted in via API");
+
         }
+
+        $app->updateCon($ownerId, ["_ContactID" => $ownerId]);
 
         if(isset($ownerId) && is_numeric($ownerId)){
 
@@ -125,7 +131,7 @@ if(isset($_REQUEST["contactId"]) && is_numeric($_REQUEST["contactId"])){
         }
         $app->grpAssign($ownerId, 5401); //applies Contact -> Owner Process
         $app->grpAssign($ownerId, 5397); //applies Mapping -> Mapping Started
-         $app->grpAssign($ownerId, 5923);  //applies Inforce -> Send Inforce Email     
+        $app->grpAssign($ownerId, 5923);  //applies Inforce -> Send Inforce Email     
 
     }
     $result = $app->grpAssign($conId, 5395); // applies Mapping -> Owner Created
