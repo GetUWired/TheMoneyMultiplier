@@ -184,7 +184,7 @@ if (isset($_POST['agentpw'])) {
 			$num = $_POST['agentnum'];
 			$agentpw = $_POST['agentpw'];
 
-		     if (($num == "9019" && $agentpw == 'TMMBKesler') || ($num == "9027" && $agentpw == 'TMMCNaugle') || ($num == "9029" && $agentpw == 'TMMJNelson') || ($num == "9031" && $agentpw == 'TMMJZieg') || ($num == "9131" && $agentpw == 'TMMTKesler') || ($num == "9275" && $agentpw == 'TMMMAndrews') || ($num == "9276" && $agentpw == 'TMMMRobarge') || ($num == "10575" && $agentpw == 'TMMJDew')){
+		     if (($num == "9019" && $agentpw == 'TMMBKesler') || ($num == "9027" && $agentpw == 'TMMCNaugle') || ($num == "9029" && $agentpw == 'TMMJNelson') || ($num == "9031" && $agentpw == 'TMMJZieg') || ($num == "9131" && $agentpw == 'TMMTKesler') || ($num == "9275" && $agentpw == 'TMMMAndrews') || ($num == "9276" && $agentpw == 'TMMMRobarge') || ($num == "10575" && $agentpw == 'TMMJDew') || ($num == "11926" && $agentpw == "TMMMHumphrey") || ($num == "11928" && $agentpw == "TMMKHatchett") || ($num == "11930" && $agentpw == "TMMHWilliams") || ($num == "11932" && $agentpw == "TMMLMack")){
 		     	create_report();
 		     } else {
 		     	$url = "https://themoneymultiplier.com/password-denied/";
@@ -259,6 +259,18 @@ if (isset($_POST['agentpw'])) {
 					echo '<h2>Jonah Dew - Agent Report</h2>';
 					break;
 
+				case 11926:
+					echo '<h2>Michelle Humphrey - Agent Report</h2>';
+					break;
+				case 11928:
+					echo '<h2>Keith Hatchett - Agent Report</h2>';
+					break;
+				case 11930:
+					echo '<h2>Holly Williams - Agent Report</h2>';
+					break;
+				case 11932:
+					echo '<h2>LaRoy Mack - Agent Report</h2>';
+					break;
 				default:
 					echo '<h2>Terri Kesler - All Agent Reporting</h2>';
 					break;
@@ -267,36 +279,36 @@ if (isset($_POST['agentpw'])) {
 	    	echo '<p style="margin: 15px 0 5px;"><input style="padding: 10px; font-size: 16px; font-weight: bold;color: #ffffff; background-color: #64bc46;border: 1px solid #64bc46;" type="button" value="Print Report" id="btPrint" onclick="createPrintTable()" /></p>';
 	    	echo '<p style="font-size:12px;">*For best results, change your layout to landscape when saving as a PDF or printing the report.</p>';
 
-								// <th><div style="width: 55px; white-space: normal;">Row</div></th>			
 			//creates the column headers
-			echo '<p class="scroll">scroll &nbsp; &rarr;</p>
-				<div class="table-wrapper" id="print-table">
-					<table>
-						<thead>
-							<tr>
-							    <th><div style="width: 35px; white-space: normal;">Row</div></th>	
-								<th><div style="width: 55px; white-space: normal;">ID</div></th>
-								<th><div style="width: 120px; white-space: normal;">Name</div></th>
-								<th><div style="width: 115px; white-space: normal;">Policy Company</div></th>
-								<th><div style="width: 100px; white-space: normal;">Policy Amount</div></th>
-								<th><div style="width: 380px; white-space: normal;">Comments</div></th>
-								<th><div style="width: 85px; white-space: normal;">Application Date</div></th>
-								<th><div style="width: 85px; white-space: normal;">Submit to Insurance Company</div></th>
-								<th><div style="width: 85px; white-space: normal;">Exam Date</div></th>
-								<th><div style="width: 85px; white-space: normal;">Insurance Approved Date</div></th>
-								<th><div style="width: 85px; white-space: normal;">Issued Date</div></th>
-								<th><div style="width: 85px; white-space: normal;">Payment Form Signed Date</div></th>
-								<th><div style="width: 85px; white-space: normal;">Inforce Date</div></th>
-							</tr>
-						</thead>
-						<tbody class="real">
-			';
+
+				echo '<p class="scroll">scroll &nbsp; &rarr;</p>
+					<div class="table-wrapper" id="print-table">
+						<table>
+							<thead>
+								<tr>
+								    <th><div style="width: 35px; white-space: normal;">Row</div></th>	
+									<th><div style="width: 55px; white-space: normal;">ID</div></th>
+									<th><div style="width: 120px; white-space: normal;">Name</div></th>
+									<th><div style="width: 150px; white-space: normal;">Application Specialist</div></td>
+									<th><div style="width: 115px; white-space: normal;">Policy Company</div></th>
+									<th><div style="width: 100px; white-space: normal;">Policy Amount</div></th>
+									<th><div style="width: 380px; white-space: normal;">Comments</div></th>
+									<th><div style="width: 85px; white-space: normal;">Application Date</div></th>
+									<th><div style="width: 85px; white-space: normal;">Submit to Insurance Company</div></th>
+									<th><div style="width: 85px; white-space: normal;">Exam Date</div></th>
+									<th><div style="width: 85px; white-space: normal;">Insurance Approved Date</div></th>
+									<th><div style="width: 85px; white-space: normal;">Issued Date</div></th>
+									<th><div style="width: 85px; white-space: normal;">Payment Form Signed Date</div></th>
+									<th><div style="width: 85px; white-space: normal;">Inforce Date</div></th>
+								</tr>
+							</thead>
+							<tbody class="real">
+				';
+
 
 			//pulls the data from the AgentReport table in the database
-			if(is_page(9019) || is_page(9027) || is_page(9029) || is_page(9031) || is_page(9275) || is_page(9276) || is_page(10575)) {
-				$sql = 'SELECT * FROM AgentReport ORDER BY PolicyAmt DESC';
-			} elseif (is_page(9131)) {
-				$sql = 'SELECT * FROM AgentReport ORDER BY ApplicationDate ASC';
+			if(is_page(9019) || is_page(9027) || is_page(9029) || is_page(9031) || is_page(9275) || is_page(9276) || is_page(10575) || is_page(9131) || is_page(11926) || is_page(11928) || is_page(11930) || is_page(11932)) {
+				$sql = 'SELECT * FROM AgentReport ORDER BY ApplicationSpecialist ASC, PolicyAmt DESC';
 			} else {
 				$sql = 'SELECT * FROM AgentReport';
 			}
@@ -323,24 +335,25 @@ if (isset($_POST['agentpw'])) {
 			    	}
 
 			    	//creating rows
-			    	$include_row = '
 
-			        	<tr>
-				            <td><div style="width: 35px; white-space: normal;">' . $rowNum .'</div></td>	
-			        		<td><div style="width: 55px; white-space: normal;">' . $row['Id'] .'</div></td>
-			        		<td><div style="width: 120px; white-space: normal;">' . $row['FirstName'] . ' '. $row['LastName'] . '</div></td>
-			        		<td><div style="width: 115px; white-space: normal;">' . $row['PolicyCompany'] .'</div></td>
-			        		<td><div style="width: 100px; white-space: normal;">$' . $row['PolicyAmt'] .'</div></td>
-			        		<td><div style="width: 380px; white-space: normal;">' . $row['Comments'] .'</div></td>
-			        		<td><div style="width: 85px; white-space: normal;">' . formatDate($row['ApplicationDate']) .'</div></td>
-			        		<td><div style="width: 85px; white-space: normal;">' . formatDate($row['SubmitInsuranceCo']) .'</div></td>
-			        		<td><div style="width: 85px; white-space: normal;">' . formatDate($row['ExamDate']) .'</div></td>
-			        		<td><div style="width: 85px; white-space: normal;">' . formatDate($row['InsuranceApprovedDate']) .'</div></td>
-			        		<td><div style="width: 85px; white-space: normal;">' . formatDate($row['IssuedDate']) .'</div></td>
-			        		<td><div style="width: 85px; white-space: normal;">' . formatDate($row['PaymentFormSignedDate']) .'</div></td>
-			        		<td><div style="width: 85px; white-space: normal;">' . formatDate($row['InforceDate']) .'</div></td>
-		        		</tr>
-			        ';
+				    	$include_row = '
+				        	<tr>
+					            <td><div style="width: 35px; white-space: normal;">' . $rowNum .'</div></td>	
+				        		<td><div style="width: 55px; white-space: normal;">' . $row['Id'] .'</div></td>
+				        		<td><div style="width: 120px; white-space: normal;">' . $row['FirstName'] . ' '. $row['LastName'] . '</div></td>
+				        		<td><div style="width: 150px; white-space: normal;">'. $row['ApplicationSpecialist'] . '</div></td>
+				        		<td><div style="width: 115px; white-space: normal;">' . $row['PolicyCompany'] .'</div></td>
+				        		<td><div style="width: 100px; white-space: normal;">$' . $row['PolicyAmt'] .'</div></td>
+				        		<td><div style="width: 380px; white-space: normal;">' . $row['Comments'] .'</div></td>
+				        		<td><div style="width: 85px; white-space: normal;">' . formatDate($row['ApplicationDate']) .'</div></td>
+				        		<td><div style="width: 85px; white-space: normal;">' . formatDate($row['SubmitInsuranceCo']) .'</div></td>
+				        		<td><div style="width: 85px; white-space: normal;">' . formatDate($row['ExamDate']) .'</div></td>
+				        		<td><div style="width: 85px; white-space: normal;">' . formatDate($row['InsuranceApprovedDate']) .'</div></td>
+				        		<td><div style="width: 85px; white-space: normal;">' . formatDate($row['IssuedDate']) .'</div></td>
+				        		<td><div style="width: 85px; white-space: normal;">' . formatDate($row['PaymentFormSignedDate']) .'</div></td>
+				        		<td><div style="width: 85px; white-space: normal;">' . formatDate($row['InforceDate']) .'</div></td>
+			        		</tr>
+				        ';
 
 
 			        //put trims around each value in the array
@@ -356,6 +369,10 @@ if (isset($_POST['agentpw'])) {
 			        $ma = in_array('Monica Andrews', $commissionArr);
 			        $mr = in_array('Marian Robarge', $commissionArr);
 			        $jd = in_array('Jonah Dew', $commissionArr);
+			        $mh = in_array('Michelle Humphrey', $commissionArr);
+			        $kh = in_array('Keith Hatchett', $commissionArr);
+			        $hw = in_array('Holly Williams', $commissionArr);
+			        $lm = in_array('LaRoy Mack', $commissionArr);
 
 			        //Brent Kesler - page 9019
 			        //Chris Naugle - page 9027
@@ -394,6 +411,18 @@ if (isset($_POST['agentpw'])) {
 				        } elseif (is_page(9131)) {
 				        	echo $include_row;
 					        $rowNum++;  
+				        } elseif (is_page(11926) && ($mh == true)) {
+				        	echo $include_row;
+					        $rowNum++; 
+				        } elseif (is_page(11928) && ($kh == true)) {
+				        	echo $include_row;
+					        $rowNum++; 
+				        } elseif (is_page(11930) && ($hw == true)) {
+				        	echo $include_row;
+					        $rowNum++; 
+				        } elseif (is_page(11932) && ($lm == true)) {
+				        	echo $include_row;
+					        $rowNum++; 
 				        } else {
 				        	continue;
 				    
@@ -463,10 +492,6 @@ if (isset($_POST['agentpw'])) {
 				var sTable = document.getElementById('print-table').innerHTML;
 
 		        var style = "<style>";
-		        // style = style + "table {width: 100%;font: 17px Calibri;}";
-		        // style = style + "table, th, td {border: solid 1px #DDD; border-collapse: collapse;";
-		        // style = style + "padding: 2px 3px;text-align: center;}";
-
 		        style = style + "table {font-family: 'Lato', sans-serif;border-collapse: collapse;";
 		        style = style + "color: #000000;display: inline-block;margin-bottom: 50px;min-width: 100%;table-layout: fixed;}";
 		        style = style + "table thead {display: block;border-collapse: collapse;}";
@@ -475,6 +500,7 @@ if (isset($_POST['agentpw'])) {
 		        style = style + "table th, table td {border: 1px solid #000000;white-space: normal;}";
 		        style = style + "table tr th {background-color: #cccccc;}";
 		        style = style + "table tr:nth-child(odd) {background-color: #cccccc;}";
+		        style = style + "table tr td > div {font-size: 14px; text-align: center; padding-top: 2px; padding-bottom: 2px;}";
 		        style = style + "</style>";
 
 		        // CREATE A WINDOW OBJECT.
